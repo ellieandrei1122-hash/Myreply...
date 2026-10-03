@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Favorite Person ♡</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(255,255,255,.7) 0 5%, transparent 6%),
+      linear-gradient(135deg, #ffd9eb, #fff0f7 45%, #ffc6e1);
+    color: #5a2942;
+    overflow-x: hidden;
+  }
+
+  .petal {
+    position: fixed;
+    width: 14px;
+    height: 22px;
+    background: rgba(255,255,255,.65);
+    border-radius: 100% 0 100% 0;
+    animation: fall linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .p1 { left: 8%; animation-duration: 9s; }
+  .p2 { left: 28%; animation-duration: 12s; animation-delay: 2s; }
+  .p3 { left: 55%; animation-duration: 10s; animation-delay: 1s; }
+  .p4 { left: 80%; animation-duration: 13s; animation-delay: 4s; }
+  @keyframes fall {
+    from { top: -30px; transform: rotate(0deg); }
+    to { top: 110vh; transform: translateX(80px) rotate(360deg); }
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    width: min(92%, 520px);
+    margin: auto;
+    padding: 38px 0;
+  }
+
+  .card {
+    background: rgba(255,255,255,.78);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,.8);
+    border-radius: 30px;
+    padding: 30px 24px;
+    box-shadow: 0 20px 60px rgba(157, 56, 103, .18);
+    text-align: center;
+  }
+
+  .lily {
+    font-size: 64px;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 7px 8px rgba(180, 75, 125, .18));
+  }
+  @keyframes float { 50% { transform: translateY(-8px); } }
+
+  h1 {
+    margin: 10px 0 5px;
+    font-size: clamp(28px, 8vw, 40px);
+    color: #b52f69;
+  }
+  .subtitle { color: #8d536c; margin-bottom: 25px; }
+
+  .progress {
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    margin: 18px 0 25px;
+  }
+  .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #edb1ca;
+    transition: .3s;
+  }
+  .dot.active { background: #c52f70; transform: scale(1.35); }
+
+  .question { font-size: 21px; font-weight: 700; margin: 12px 0 18px; }
+  .hint { font-size: 13px; color: #9b6b7e; margin-bottom: 14px; }
+
+  input {
+    width: 100%;
+    padding: 15px 17px;
+    border: 2px solid #f0bfd4;
+    border-radius: 16px;
+    outline: none;
+    font-size: 17px;
+    text-align: center;
+    color: #59253f;
+    background: #fffafd;
+  }
+  input:focus { border-color: #ca4d7f; box-shadow: 0 0 0 4px rgba(202,77,127,.1); }
+
+  button {
+    border: 0;
+    width: 100%;
+    padding: 15px;
+    margin-top: 13px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #c52f70, #e85b98);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(197,47,112,.22);
+    transition: .2s;
+  }
+  button:hover { transform: translateY(-2px); }
+  button:active { transform: scale(.98); }
+
+  .error {
+    color: #c02c58;
+    min-height: 20px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .secret { display: none; }
+  .secret.show { display: block; animation: reveal .8s ease; }
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(20px) scale(.97); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .letter {
+    margin-top: 20px;
+    padding: 23px;
+    border-radius: 22px;
+    background: #fff7fb;
+    text-align: left;
+    line-height: 1.7;
+    border: 1px solid #f5d2e1;
+  }
+  .letter p { margin: 0 0 14px; }
+  .signature { text-align: right; font-weight: 700; color: #b52f69; }
+
+  .surprise {
+    margin-top: 18px;
+    padding: 17px;
+    background: linear-gradient(135deg,#ffe1ef,#fff);
+    border-radius: 18px;
+    text-align: center;
+  }
+  .mcdo { font-size: 30px; }
+  .footer { margin-top: 20px; font-size: 12px; color: #a16b81; }
+
+  .shake { animation: shake .35s; }
+  @keyframes shake {
+    25% { transform: translateX(-7px); }
+    50% { transform: translateX(7px); }
+    75% { transform: translateX(-5px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="petal p1"></div><div class="petal p2"></div>
+<div class="petal p3"></div><div class="petal p4"></div>
+
+<div class="wrap">
+  <div class="card" id="card">
+    <div class="lily">🌸</div>
+    <h1>Before You Enter...</h1>
+    <div class="subtitle">I made a tiny secret place just for you ♡</div>
+
+    <div class="progress">
+      <span class="dot active" id="d1"></span>
+      <span class="dot" id="d2"></span>
+      <span class="dot" id="d3"></span>
+    </div>
+
+    <div id="quiz">
+      <div class="question" id="question">When is my birthday? 🎂</div>
+      <div class="hint" id="hint">Hint: You definitely should know this one hehe.</div>
+      <input id="answer" type="text" autocomplete="off" placeholder="Type your answer...">
+      <button onclick="checkAnswer()">Unlock ♡</button>
+      <div class="error" id="error"></div>
+    </div>
+
+    <div class="secret" id="secret">
+      <div class="letter">
+        <p><b>To my favorite girl,</b> 🌷</p>
+        <p>
+          If you're reading this, you made it through all three questions.
+          That means you really do know me... but honestly, I hope you know
+          something even more important:
+        </p>
+        <p>
+          <b>I’m really, really lucky to have you.</b>
+        </p>
+        <p>
+          You’re one of the sweetest parts of my life. I love how you love
+          pink, lilies, and even your McDo moments hehe. But more than all
+          those little things, I love being able to make you smile.
+        </p>
+        <p>
+          I may not always have the perfect words, but I promise that I’ll
+          keep choosing you, supporting you, and appreciating you through
+          the good days and the not-so-good ones.
+        </p>
+        <p>
+          So here's your final surprise:
+          <b>thank you for being you, and thank you for letting me be part
+          of your story. ♡</b>
+        </p>
+        <p class="signature">— Your favorite person (hopefully) ♡</p>
+      </div>
+
+      <div class="surprise">
+        <div class="mcdo">🍟🍔🥤</div>
+        <b>Official Girlfriend Reward</b>
+        <p>One McDo date + unlimited lilies + unlimited lambing.</p>
+      </div>
+
+      <button onclick="showExtra()">One More Surprise 🌷</button>
+      <div id="extra" style="display:none; margin-top:15px; line-height:1.7;">
+        <div style="font-size:55px;">💗🌸💗</div>
+        <b>Plot twist:</b><br>
+        You didn't unlock this website because you answered everything correctly...
+        You unlocked it because <b>you are the person I wanted to give this to.</b> ♡
+      </div>
+    </div>
+
+    <div class="footer">Made with love, a little bit of coding, and a lot of lambing.</div>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    {
+      q: "When is my birthday? 🎂",
+      hint: "Hint: You definitely should know this one hehe.",
+      answers: ["nov 22", "november 22", "11/22", "11-22", "nov22"]
+    },
+    {
+      q: "What is my height? 📏",
+      hint: "Hint: It's written in feet and inches.",
+      answers: ["5'9", "5’9", "5 9", "5ft 9", "5 feet 9", "5'9\""]
+    },
+    {
+      q: "What is my favorite color? 🖤🤍",
+      hint: "Hint: It's actually TWO colors.",
+      answers: ["black and white", "black & white", "black white", "black, white", "black and white."]
+    }
+  ];
+
+  let step = 0;
+
+  function normalize(s) {
+    return s.toLowerCase().trim().replace(/\s+/g, " ");
+  }
+
+  function checkAnswer() {
+    const input = document.getElementById("answer");
+    const error = document.getElementById("error");
+    const card = document.getElementById("card");
+    const value = normalize(input.value);
+
+    if (questions[step].answers.some(a => normalize(a) === value)) {
+      step++;
+      error.textContent = "";
+      input.value = "";
+
+      if (step < questions.length) {
+        document.getElementById("question").textContent = questions[step].q;
+        document.getElementById("hint").textContent = questions[step].hint;
+        document.getElementById("d1").classList.toggle("active", step === 0);
+        document.getElementById("d2").classList.toggle("active", step === 1);
+        document.getElementById("d3").classList.toggle("active", step === 2);
+      } else {
+        document.getElementById("quiz").style.display = "none";
+        document.querySelector(".progress").style.display = "none";
+        document.querySelector(".lily").textContent = "🌷";
+        document.querySelector("h1").textContent = "You Made It! ♡";
+        document.querySelector(".subtitle").textContent = "This little secret was made especially for you.";
+        document.getElementById("secret").classList.add("show");
+      }
+    } else {
+      error.textContent = "Hmm... try again, love. You know this one! 🥺";
+      card.classList.remove("shake");
+      void card.offsetWidth;
+      card.classList.add("shake");
+    }
+  }
+
+  function showExtra() {
+    document.getElementById("extra").style.display = "block";
+    event.target.style.display = "none";
+  }
+
+  document.getElementById("answer").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") checkAnswer();
+  });
+</script>
+
+</body>
+</html>
